@@ -1055,9 +1055,16 @@ def ROI_plot(video_dict):
         rois = video_dict['region_names'][:len(xs)]
         return hv.Labels((xs, ys, rois))
     
+    # We need straightgrid lines to be abe to draw Region of Interest (RIO) in which for open field the importent regions are the border and Corner and center. So, this lines will help to draw exact lines for your measurings.
+    line1= hv.VLine(w/4).opts(color='white', line_width=1.5)
+    line2= hv.VLine(2*w/4).opts(color='white', line_width=1.5)
+    line3= hv.VLine(3*w/4).opts(color='white', line_width=1.5)
+    line5= hv.HLine(1*h/4).opts(color='white', line_width=1.5)
+    line6= hv.HLine(2*h/4).opts(color='white', line_width=1.5)
+    line7= hv.HLine(3*h/4).opts(color='white', line_width=1.5)
     if nobjects > 0:
         dmap = hv.DynamicMap(centers, streams=[poly_stream])
-        return (image * poly * dmap), poly_stream
+        return (image * poly * dmap * line1 * line2 * line3 * line5 * line6 * line7), poly_stream
     else:
         return (image),None
     
